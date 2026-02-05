@@ -27,20 +27,6 @@ body{
   to{transform:translateY(-120vh)}
 }
 
-/* Music toggle */
-.music-btn{
-  position:fixed;
-  top:20px;
-  right:20px;
-  background:#ff4d6d;
-  color:#fff;
-  padding:10px 18px;
-  border-radius:25px;
-  cursor:pointer;
-  z-index:999;
-  font-size:14px;
-}
-
 /* Hero */
 .hero{
   min-height:100vh;
@@ -66,6 +52,7 @@ body{
   color:#fff;
   border-radius:30px;
   text-decoration:none;
+  font-weight:500;
 }
 
 /* Sections */
@@ -129,33 +116,10 @@ footer{
 
 <body>
 
-<!-- AUDIO (GitHub Pages SAFE) -->
+<!-- AUDIO -->
 <audio id="bgMusic" preload="auto" loop>
   <source src="./music.mp3" type="audio/mpeg">
 </audio>
-
-<div class="music-btn" id="musicBtn">🎵 Play Music</div>
-
-<script>
-const music = document.getElementById("bgMusic");
-const btn = document.getElementById("musicBtn");
-let playing = false;
-
-btn.addEventListener("click", () => {
-  if (!playing) {
-    music.play().then(() => {
-      playing = true;
-      btn.innerHTML = "⏸ Pause Music";
-    }).catch(() => {
-      alert("Tap once more to allow music ❤️");
-    });
-  } else {
-    music.pause();
-    playing = false;
-    btn.innerHTML = "🎵 Play Music";
-  }
-});
-</script>
 
 <!-- Hearts -->
 <script>
@@ -174,7 +138,11 @@ for(let i=0;i<30;i++){
   <div>
     <h1>Sneha, My Forever ❤️</h1>
     <p>You are my favorite feeling ✨</p>
-    <a href="#story" class="btn">Our Love Story</a>
+
+    <!-- IMPORTANT: autoplay starts from this click -->
+    <a href="#story" class="btn" onclick="startMusic()">
+      Our Love Story
+    </a>
   </div>
 </div>
 
@@ -216,6 +184,16 @@ for(let i=0;i<30;i++){
 </footer>
 
 <script>
+let musicStarted = false;
+function startMusic(){
+  if(!musicStarted){
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.7;
+    music.play().catch(()=>{});
+    musicStarted = true;
+  }
+}
+
 function yes(){
   document.body.innerHTML=`
   <div class="hero">

@@ -15,6 +15,25 @@ body{
   overflow-x:hidden;
 }
 
+/* PASSWORD SCREEN */
+#lock{
+  position:fixed;inset:0;
+  background:linear-gradient(135deg,#000428,#004e92);
+  display:flex;align-items:center;justify-content:center;
+  z-index:99999;text-align:center;
+}
+#lock input{
+  padding:12px;border-radius:25px;border:none;
+  text-align:center;font-size:16px;
+}
+#lock button{
+  margin-top:15px;
+  padding:10px 25px;
+  border:none;border-radius:25px;
+  background:#ff4d6d;color:#fff;
+  cursor:pointer;
+}
+
 /* Floating hearts */
 .heart{
   position:fixed;
@@ -92,6 +111,12 @@ button{
 #yes{background:#ff4d6d;color:white}
 #no{margin-left:15px}
 
+/* Countdown */
+#countdown{
+  font-size:1.5rem;
+  margin-top:20px;
+}
+
 /* YES SCREEN */
 #yesScreen{
   position:fixed;
@@ -107,22 +132,47 @@ button{
   font-family:'Playfair Display',serif;
   font-size:3.5rem;
 }
-#yesScreen p{margin-top:15px;font-size:1.3rem}
 
-/* Footer */
+/* Fireworks canvas */
+canvas{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
 footer{padding:20px;text-align:center;opacity:.7}
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO (KEEP THIS) -->
-<audio id="bgMusic" preload="auto" loop>
+<!-- PASSWORD LOCK -->
+<div id="lock">
+  <div>
+    <h1>Enter Password ❤️</h1>
+    <input type="password" id="pass" placeholder="Password">
+    <br>
+    <button onclick="unlock()">Unlock</button>
+  </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
   <source src="./music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Floating hearts -->
+<canvas id="fireworks"></canvas>
+
 <script>
+/* PASSWORD */
+const PASSWORD = "sneha";
+function unlock(){
+  if(document.getElementById("pass").value === PASSWORD){
+    document.getElementById("lock").style.display="none";
+  } else alert("Wrong password 💔");
+}
+
+/* HEARTS */
 for(let i=0;i<30;i++){
   let h=document.createElement("div");
   h.className="heart";
@@ -131,6 +181,75 @@ for(let i=0;i<30;i++){
   h.style.animationDuration=(5+Math.random()*5)+"s";
   document.body.appendChild(h);
 }
+
+/* MUSIC WITH FADE IN */
+let started=false;
+function startMusic(){
+  if(started) return;
+  const m=document.getElementById("bgMusic");
+  m.volume=0;
+  m.play().catch(()=>{});
+  let v=0;
+  let fade=setInterval(()=>{
+    if(v<0.7){v+=0.02;m.volume=v;}
+    else clearInterval(fade);
+  },200);
+  started=true;
+}
+
+/* COUNTDOWN */
+const target = new Date("Feb 14, 2026 00:00:00").getTime();
+setInterval(()=>{
+  let now=new Date().getTime();
+  let d=target-now;
+  if(d<0) return;
+  let days=Math.floor(d/(1000*60*60*24));
+  document.getElementById("countdown").innerHTML=
+    `Countdown to Valentine: ${days} days 💖`;
+},1000);
+
+/* YES */
+function yes(){
+  document.getElementById("yesScreen").style.display="flex";
+  startFireworks();
+}
+
+/* NO */
+function moveNo(){
+  let b=document.getElementById("no");
+  b.style.position="absolute";
+  b.style.left=Math.random()*80+"%";
+  b.style.top=Math.random()*80+"%";
+}
+
+/* FIREWORKS */
+const c=document.getElementById("fireworks");
+const ctx=c.getContext("2d");
+c.width=innerWidth;c.height=innerHeight;
+let particles=[];
+function startFireworks(){
+  setInterval(()=>{
+    for(let i=0;i<50;i++){
+      particles.push({
+        x:innerWidth/2,y:innerHeight/2,
+        vx:(Math.random()-0.5)*6,
+        vy:(Math.random()-0.5)*6,
+        life:100
+      });
+    }
+  },800);
+}
+function animate(){
+  ctx.clearRect(0,0,c.width,c.height);
+  particles.forEach((p,i)=>{
+    p.x+=p.vx;p.y+=p.vy;p.life--;
+    ctx.fillStyle="white";
+    ctx.fillRect(p.x,p.y,2,2);
+    if(p.life<=0) particles.splice(i,1);
+  });
+  requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 <!-- HERO -->
@@ -139,17 +258,14 @@ for(let i=0;i<30;i++){
     <h1>Sneha, My Forever ❤️</h1>
     <p>You are my favorite feeling ✨</p>
     <a href="#story" class="btn" onclick="startMusic()">Our Love Story</a>
+    <div id="countdown"></div>
   </div>
 </div>
 
 <!-- STORY -->
 <section id="story">
   <h2>Dear Sneha 💕</h2>
-  <p>
-    Loving you is the most beautiful thing in my life.  
-    Every smile of yours makes my world brighter.  
-    You are my today, my tomorrow, my always.
-  </p>
+  <p>You are my today, my tomorrow, my always.</p>
 </section>
 
 <!-- GALLERY -->
@@ -167,7 +283,6 @@ for(let i=0;i<30;i++){
 <section>
   <div class="propose">
     <h2>Will You Be My Valentine, Sneha? 💍</h2>
-    <p>You are my heart, my home, my forever.</p>
     <div class="buttons">
       <button id="yes" onclick="yes()">YES ❤️</button>
       <button id="no" onmouseover="moveNo()">NO 😢</button>
@@ -177,30 +292,10 @@ for(let i=0;i<30;i++){
 
 <footer>Made with ❤️ for Sneha</footer>
 
-<!-- YES OVERLAY -->
+<!-- YES SCREEN -->
 <div id="yesScreen">
-  <div>
-    <h1>Sneha Said YES 💖</h1>
-    <p>Our love story just became eternal ✨</p>
-  </div>
+  <h1>Sneha Said YES 💖</h1>
 </div>
 
-<script>
-let musicStarted = false;
-
-function startMusic(){
-  if(!musicStarted){
-    document.getElementById("bgMusic").play().catch(()=>{});
-    musicStarted = true;
-  }
-}
-
-function yes(){
-  document.getElementById("yesScreen").style.display = "flex";
-}
-
-function moveNo(){
-  let b=document.getElementById("no");
-  b.style.position="absolute";
-  b.style.left=Math.random()*80+"%";
-  b.style.t
+</body>
+</html>

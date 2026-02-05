@@ -21,11 +21,24 @@ body{
   bottom:-20px;
   font-size:22px;
   animation:float 8s linear infinite;
-  opacity:0.6;
+  opacity:.6;
 }
 @keyframes float{
-  from{transform:translateY(0)}
   to{transform:translateY(-120vh)}
+}
+
+/* Music toggle */
+.music-btn{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:#ff4d6d;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:25px;
+  cursor:pointer;
+  z-index:999;
+  font-size:14px;
 }
 
 /* Hero */
@@ -53,9 +66,7 @@ body{
   color:#fff;
   border-radius:30px;
   text-decoration:none;
-  font-weight:500;
 }
-.btn:hover{background:#ff1e4d}
 
 /* Sections */
 section{
@@ -85,11 +96,9 @@ section p{
   border-radius:18px;
   transition:.4s;
 }
-.gallery img:hover{
-  transform:scale(1.05);
-}
+.gallery img:hover{transform:scale(1.05)}
 
-/* Proposal box */
+/* Proposal */
 .propose{
   background:rgba(255,255,255,.1);
   backdrop-filter:blur(12px);
@@ -98,9 +107,7 @@ section p{
   max-width:600px;
   margin:auto;
 }
-.buttons{
-  margin-top:30px;
-}
+.buttons{margin-top:30px}
 button{
   padding:12px 28px;
   border:none;
@@ -108,7 +115,7 @@ button{
   font-size:16px;
   cursor:pointer;
 }
-#yes{background:#ff4d6d;color:#fff}
+#yes{background:#ff4d6d;color:white}
 #no{margin-left:15px}
 
 /* Footer */
@@ -122,10 +129,33 @@ footer{
 
 <body>
 
-<!-- Background music -->
-<audio autoplay loop>
-  <source src="music.mp3" type="audio/mpeg">
+<!-- AUDIO (GitHub Pages SAFE) -->
+<audio id="bgMusic" preload="auto" loop>
+  <source src="./music.mp3" type="audio/mpeg">
 </audio>
+
+<div class="music-btn" id="musicBtn">🎵 Play Music</div>
+
+<script>
+const music = document.getElementById("bgMusic");
+const btn = document.getElementById("musicBtn");
+let playing = false;
+
+btn.addEventListener("click", () => {
+  if (!playing) {
+    music.play().then(() => {
+      playing = true;
+      btn.innerHTML = "⏸ Pause Music";
+    }).catch(() => {
+      alert("Tap once more to allow music ❤️");
+    });
+  } else {
+    music.pause();
+    playing = false;
+    btn.innerHTML = "🎵 Play Music";
+  }
+});
+</script>
 
 <!-- Hearts -->
 <script>
@@ -143,7 +173,7 @@ for(let i=0;i<30;i++){
 <div class="hero">
   <div>
     <h1>Sneha, My Forever ❤️</h1>
-    <p>You are my favorite feeling in this world ✨</p>
+    <p>You are my favorite feeling ✨</p>
     <a href="#story" class="btn">Our Love Story</a>
   </div>
 </div>
@@ -152,7 +182,7 @@ for(let i=0;i<30;i++){
 <section id="story">
   <h2>Dear Sneha 💕</h2>
   <p>
-    Loving you is the easiest and most beautiful thing I’ve ever done.  
+    Loving you is the most beautiful thing in my life.  
     Every smile of yours makes my world brighter.  
     You are my today, my tomorrow, my always.
   </p>

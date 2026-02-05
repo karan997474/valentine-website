@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Sneha ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* Floating hearts */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:22px;
+  animation:float 8s linear infinite;
+  opacity:0.6;
+}
+@keyframes float{
+  from{transform:translateY(0)}
+  to{transform:translateY(-120vh)}
+}
+
+/* Hero */
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:3.4rem;
+}
+.hero p{
+  margin-top:15px;
+  font-size:1.2rem;
+}
+.btn{
+  margin-top:30px;
+  display:inline-block;
+  padding:14px 36px;
+  background:#ff4d6d;
+  color:#fff;
+  border-radius:30px;
+  text-decoration:none;
+  font-weight:500;
+}
+.btn:hover{background:#ff1e4d}
+
+/* Sections */
+section{
+  padding:80px 20px;
+  text-align:center;
+}
+section h2{
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;
+  margin-bottom:20px;
+}
+section p{
+  max-width:700px;
+  margin:auto;
+  opacity:.9;
+}
+
+/* Gallery */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  margin-top:40px;
+}
+.gallery img{
+  width:100%;
+  border-radius:18px;
+  transition:.4s;
+}
+.gallery img:hover{
+  transform:scale(1.05);
+}
+
+/* Proposal box */
+.propose{
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(12px);
+  padding:40px;
+  border-radius:20px;
+  max-width:600px;
+  margin:auto;
+}
+.buttons{
+  margin-top:30px;
+}
+button{
+  padding:12px 28px;
+  border:none;
+  border-radius:25px;
+  font-size:16px;
+  cursor:pointer;
+}
+#yes{background:#ff4d6d;color:#fff}
+#no{margin-left:15px}
+
+/* Footer */
+footer{
+  padding:20px;
+  text-align:center;
+  opacity:.7;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background music -->
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hearts -->
+<script>
+for(let i=0;i<30;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(5+Math.random()*5)+"s";
+  document.body.appendChild(h);
+}
+</script>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <h1>Sneha, My Forever ❤️</h1>
+    <p>You are my favorite feeling in this world ✨</p>
+    <a href="#story" class="btn">Our Love Story</a>
+  </div>
+</div>
+
+<!-- STORY -->
+<section id="story">
+  <h2>Dear Sneha 💕</h2>
+  <p>
+    Loving you is the easiest and most beautiful thing I’ve ever done.  
+    Every smile of yours makes my world brighter.  
+    You are my today, my tomorrow, my always.
+  </p>
+</section>
+
+<!-- GALLERY -->
+<section>
+  <h2>Moments With You 📸</h2>
+  <div class="gallery">
+    <img src="images/sneha1.jpg">
+    <img src="images/sneha2.jpg">
+    <img src="images/sneha3.jpg">
+    <img src="images/sneha4.jpg">
+  </div>
+</section>
+
+<!-- PROPOSAL -->
+<section>
+  <div class="propose">
+    <h2>Will You Be My Valentine, Sneha? 💍</h2>
+    <p>You are my heart, my home, my forever.</p>
+    <div class="buttons">
+      <button id="yes" onclick="yes()">YES ❤️</button>
+      <button id="no" onmouseover="moveNo()">NO 😢</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Made with ❤️ for Sneha
+</footer>
+
+<script>
+function yes(){
+  document.body.innerHTML=`
+  <div class="hero">
+    <div>
+      <h1>Sneha Said YES 💖</h1>
+      <p>Our love story just became eternal ✨</p>
+    </div>
+  </div>`;
+}
+
+function moveNo(){
+  let b=document.getElementById("no");
+  b.style.position="absolute";
+  b.style.left=Math.random()*80+"%";
+  b.style.top=Math.random()*80+"%";
+}
+</script>
+
+</body>
+</html>

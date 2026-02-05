@@ -23,9 +23,7 @@ body{
   animation:float 8s linear infinite;
   opacity:.6;
 }
-@keyframes float{
-  to{transform:translateY(-120vh)}
-}
+@keyframes float{to{transform:translateY(-120vh)}}
 
 /* Hero */
 .hero{
@@ -40,10 +38,7 @@ body{
   font-family:'Playfair Display',serif;
   font-size:3.4rem;
 }
-.hero p{
-  margin-top:15px;
-  font-size:1.2rem;
-}
+.hero p{margin-top:15px;font-size:1.2rem}
 .btn{
   margin-top:30px;
   display:inline-block;
@@ -52,24 +47,16 @@ body{
   color:#fff;
   border-radius:30px;
   text-decoration:none;
-  font-weight:500;
 }
 
 /* Sections */
-section{
-  padding:80px 20px;
-  text-align:center;
-}
+section{padding:80px 20px;text-align:center}
 section h2{
   font-family:'Playfair Display',serif;
   font-size:2.5rem;
   margin-bottom:20px;
 }
-section p{
-  max-width:700px;
-  margin:auto;
-  opacity:.9;
-}
+section p{max-width:700px;margin:auto;opacity:.9}
 
 /* Gallery */
 .gallery{
@@ -105,23 +92,36 @@ button{
 #yes{background:#ff4d6d;color:white}
 #no{margin-left:15px}
 
-/* Footer */
-footer{
-  padding:20px;
+/* YES SCREEN */
+#yesScreen{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#1d2671,#c33764);
+  display:none;
+  align-items:center;
+  justify-content:center;
   text-align:center;
-  opacity:.7;
+  z-index:9999;
 }
+#yesScreen h1{
+  font-family:'Playfair Display',serif;
+  font-size:3.5rem;
+}
+#yesScreen p{margin-top:15px;font-size:1.3rem}
+
+/* Footer */
+footer{padding:20px;text-align:center;opacity:.7}
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO -->
+<!-- AUDIO (KEEP THIS) -->
 <audio id="bgMusic" preload="auto" loop>
   <source src="./music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Hearts -->
+<!-- Floating hearts -->
 <script>
 for(let i=0;i<30;i++){
   let h=document.createElement("div");
@@ -138,11 +138,7 @@ for(let i=0;i<30;i++){
   <div>
     <h1>Sneha, My Forever ❤️</h1>
     <p>You are my favorite feeling ✨</p>
-
-    <!-- IMPORTANT: autoplay starts from this click -->
-    <a href="#story" class="btn" onclick="startMusic()">
-      Our Love Story
-    </a>
+    <a href="#story" class="btn" onclick="startMusic()">Our Love Story</a>
   </div>
 </div>
 
@@ -179,38 +175,32 @@ for(let i=0;i<30;i++){
   </div>
 </section>
 
-<footer>
-  Made with ❤️ for Sneha
-</footer>
+<footer>Made with ❤️ for Sneha</footer>
+
+<!-- YES OVERLAY -->
+<div id="yesScreen">
+  <div>
+    <h1>Sneha Said YES 💖</h1>
+    <p>Our love story just became eternal ✨</p>
+  </div>
+</div>
 
 <script>
 let musicStarted = false;
+
 function startMusic(){
   if(!musicStarted){
-    const music = document.getElementById("bgMusic");
-    music.volume = 0.7;
-    music.play().catch(()=>{});
+    document.getElementById("bgMusic").play().catch(()=>{});
     musicStarted = true;
   }
 }
 
 function yes(){
-  document.body.innerHTML=`
-  <div class="hero">
-    <div>
-      <h1>Sneha Said YES 💖</h1>
-      <p>Our love story just became eternal ✨</p>
-    </div>
-  </div>`;
+  document.getElementById("yesScreen").style.display = "flex";
 }
 
 function moveNo(){
   let b=document.getElementById("no");
   b.style.position="absolute";
   b.style.left=Math.random()*80+"%";
-  b.style.top=Math.random()*80+"%";
-}
-</script>
-
-</body>
-</html>
+  b.style.t
